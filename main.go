@@ -7,6 +7,7 @@ import (
 	"github.com/yofu/dxf/entity"
 	"github.com/yofu/dxf/table"
 	"log"
+	"rowsMVP/DescriptionReader"
 	"rowsMVP/Drawer"
 )
 
@@ -30,6 +31,19 @@ func drawLineTest() {
 func main() {
 	var drawer Drawer.Drawer
 	drawer.InitDrawer()
-	drawer.DrawTop()
-	
+	var well DescriptionReader.Well
+	well.AbsoluteHeight = 100
+	well.HasWater = true
+	well.WaterDepths = []float64{1.5}
+	well.Depths = make(map[float64]DescriptionReader.Element)
+	well.Depths[1] = DescriptionReader.Element{
+		Identifier: "2а",
+		Name:       "суглинок тугопластичный",
+	}
+	well.Depths[2] = DescriptionReader.Element{
+		Identifier: "2б",
+		Name:       "суглинок мягкопластичный",
+	}
+	drawer.SetWells([]DescriptionReader.Well{well})
+	drawer.DrawMain()
 }

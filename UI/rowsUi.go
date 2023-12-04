@@ -29,7 +29,7 @@ func InitWindow(a *astilectron.Astilectron) {
 	})
 	w.Create()
 	w.On(astilectron.EventNameWindowEventClosed, func(e astilectron.Event) (deleteListener bool) {
-		//w.Close()
+		w.Close()
 		//a.Quit()
 		a.Stop()
 		a.Close()
