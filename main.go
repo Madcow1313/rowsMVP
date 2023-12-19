@@ -9,6 +9,7 @@ import (
 	"log"
 	"rowsMVP/DescriptionReader"
 	"rowsMVP/Drawer"
+	rowsUi "rowsMVP/UI"
 )
 
 func drawLineTest() {
@@ -44,6 +45,7 @@ func main() {
 		Identifier: "2б",
 		Name:       "суглинок мягкопластичный",
 	}
-	drawer.SetWells([]DescriptionReader.Well{well})
-	drawer.DrawMain()
+	rowsUi.InitAstilectron()
+	//drawer.SetWells([]DescriptionReader.Well{well})
+	//drawer.DrawMain()
 }

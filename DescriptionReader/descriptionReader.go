@@ -11,12 +11,12 @@ type Element struct {
 }
 
 type Well struct {
-	Number         string `json:"number,omitempty"`
-	Date           string
-	AbsoluteHeight float64
-	HasWater       bool
-	WaterDepths    []float64
-	Depths         map[float64]Element `json:"depths,omitempty"`
+	Number         string              `json:"Number,omitempty"`
+	Date           string              `json:"Date"`
+	AbsoluteHeight float64             `json:"AbsoluteHeight"`
+	HasWater       bool                `json:"HasWater"`
+	WaterDepths    []float64           `json:"WaterDepths,omitempty"`
+	Depths         map[float64]Element `json:"Depths,omitempty"`
 }
 
 func findBeginning(f *excelize.File) Well {
