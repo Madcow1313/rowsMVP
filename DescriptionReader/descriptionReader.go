@@ -13,8 +13,8 @@ type Element struct {
 type Well struct {
 	Number         string              `json:"Number,omitempty"`
 	Date           string              `json:"Date"`
-	AbsoluteHeight float64             `json:"AbsoluteHeight"`
-	HasWater       bool                `json:"HasWater"`
+	AbsoluteHeight float64             `json:"AbsoluteHeight,string"`
+	HasWater       bool                `json:"HasWater,string"`
 	WaterDepths    []float64           `json:"WaterDepths,omitempty"`
 	Depths         map[float64]Element `json:"Depths,omitempty"`
 }

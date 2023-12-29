@@ -1,0 +1,11 @@
+{
+  "Number": "1",
+  "Date": "19.12.2023",
+  "AbsoluteHeight": "98.10",
+  "HasWater": "true",
+  "WaterDepths": "11 12 13",
+  "Depths": {
+      "Суглинок": "11",
+      "Глина": "15"
+  }
+}
