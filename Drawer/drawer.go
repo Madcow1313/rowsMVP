@@ -52,6 +52,7 @@ func (d *Drawer) DrawMain() {
 	pos.Y = -50
 	for _, w := range wells {
 		prevDepth := float64(0)
+		w.Depths = w.Elements() //should work or i don't know
 		for depth, _ := range w.Depths {
 			d.drawLine(Position{pos.X, pos.Y - prevDepth*10}, Position{pos.X, pos.Y - depth*10})
 			d.drawLine(Position{pos.X, pos.Y - prevDepth*10}, Position{pos.X, pos.Y - depth*10})

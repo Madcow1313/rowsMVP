@@ -1,11 +1,23 @@
-{
-  "Number": "1",
-  "Date": "19.12.2023",
-  "AbsoluteHeight": "98.10",
-  "HasWater": "true",
-  "WaterDepths": "11 12 13",
-  "Depths": {
-      "Суглинок": "11",
-      "Глина": "15"
-  }
-}
+
+  [
+    {
+      "number": "1",
+      "date": "19.12.2023",
+      "absoluteHeight": 98.10,
+      "hasWater": true,
+      "waterDepths": [11,12,13],
+      "depths": [10, 15],
+      "soil": ["Суглинок", "Глина"],
+      "identifiers": ["2а", "3"]
+    },
+    {
+      "number": "1",
+      "date": "19.12.2023",
+      "absoluteHeight": 98.10,
+      "hasWater": true,
+      "waterDepths": [11,12,13],
+      "depths": [10, 15],
+      "soil": ["Суглинок", "Глина"],
+      "identifiers": ["2а", "3"]
+    }
+  ]

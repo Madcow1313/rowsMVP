@@ -10,13 +10,31 @@ type Element struct {
 	Name       string `json:"name"`
 }
 
+type Project struct {
+	Data []Well `json:"data"`
+}
+
 type Well struct {
-	Number         string              `json:"Number,omitempty"`
-	Date           string              `json:"Date"`
-	AbsoluteHeight float64             `json:"AbsoluteHeight,string"`
-	HasWater       bool                `json:"HasWater,string"`
-	WaterDepths    []float64           `json:"WaterDepths,omitempty"`
-	Depths         map[float64]Element `json:"Depths,omitempty"`
+	Number         string    `json:"number"`
+	Date           string    `json:"date"`
+	AbsoluteHeight float64   `json:"absoluteHeight"`
+	HasWater       bool      `json:"hasWater"`
+	WaterDepths    []float64 `json:"waterDepths"`
+	RawDepths      []float64 `json:"depths"`
+	Soil           []string  `json:"soil"`
+	Identifiers    []string  `json:"identifiers"`
+	Depths         map[float64]Element
+}
+
+func (w *Well) Elements() map[float64]Element {
+	m := make(map[float64]Element)
+	for i := range w.RawDepths {
+		m[w.RawDepths[i]] = Element{
+			Identifier: w.Identifiers[i],
+			Name:       w.Soil[i],
+		}
+	}
+	return m
 }
 
 func findBeginning(f *excelize.File) Well {
