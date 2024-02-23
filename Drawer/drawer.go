@@ -20,6 +20,10 @@ type Drawer struct {
 	description []DescriptionReader.Well
 }
 
+func (d *Drawer) Save(s string) {
+	d.drawer.SaveAs(s)
+}
+
 func (d *Drawer) Wells() []DescriptionReader.Well {
 	return d.description
 }
@@ -45,7 +49,7 @@ func (d *Drawer) putText(pos Position, value string, rotation float64) {
 	d.drawer.AddEntity(t)
 }
 
-// TODO: add water and samples
+// TODO: add water and samples and refactor
 func (d *Drawer) DrawMain() {
 	wells := d.Wells()
 	pos := d.position
@@ -80,7 +84,10 @@ func (d *Drawer) DrawMain() {
 				})
 			}
 		}
-		d.DrawTop(prevDepth)
+		t := d.position.X
+		d.DrawTop(10)
+		d.position.X = t + 200
+		pos.X += 200
 	}
 	d.drawer.Save()
 }

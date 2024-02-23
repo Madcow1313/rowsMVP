@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить скважину</title>
+    <link href="static/style.css" type="text/css">
+</head>
+<body>
+<div>
+    <div><label>№Скважины</label><input value={{ .Number }}></div>
+    <div><label>Дата</label><input value={{ .Date }}></div>
+    <div><label>Абс.отметка</label><input value={{ .Height }}></div>
+    <div><label>Грунтовые воды</label><input type="checkbox" value={{ .HasWater }} {{ .Checked }}></div>
+    <div>
+        <label>Глубина грунтовых вод</label>
+        <table>
+            <thead>
+            <tr>
+            <th scope="col">Глубина залегания</th>
+            <th scope="col">Установившийся уровень</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <div>
+        <label>Грунты</label>
+        <table>
+            <thead>
+            <tr>
+                <th scope="col">Глубина залегания</th>
+                <th scope="col">Установившийся уровень</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<script src="static/js/pw.js"></script>
+</body>
+</html>
