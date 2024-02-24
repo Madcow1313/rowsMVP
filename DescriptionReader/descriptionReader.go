@@ -68,8 +68,11 @@ func Walk(f *excelize.File) []Well {
 			ids := make([]string, 0)
 			ids = append(ids, r[4])
 			soil := make([]string, 0)
-			soil = append(soil, r[len(r)-2])
-
+			if len(r) > 12 {
+				soil = append(soil, r[len(r)-2])
+			} else {
+				soil = append(soil, r[len(r)-1])
+			}
 			wells = append(wells, Well{
 				Number:         r[0],
 				Date:           r[1],
@@ -86,7 +89,13 @@ func Walk(f *excelize.File) []Well {
 			if len(r[4]) > 0 {
 				wells[len(wells)-1].Identifiers = append(wells[len(wells)-1].Identifiers, r[4])
 			}
-			wells[len(wells)-1].Soil = append(wells[len(wells)-1].Soil, r[len(r)-2])
+			fmt.Println(len(r))
+			if len(r) > 12 {
+				wells[len(wells)-1].Soil = append(wells[len(wells)-1].Soil, r[len(r)-2])
+			} else {
+				wells[len(wells)-1].Soil = append(wells[len(wells)-1].Soil, r[len(r)-1])
+			}
+
 		}
 	}
 	return wells

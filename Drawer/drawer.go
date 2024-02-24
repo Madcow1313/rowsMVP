@@ -1,6 +1,7 @@
 package Drawer
 
 import (
+	"fmt"
 	"github.com/yofu/dxf"
 	"github.com/yofu/dxf/drawing"
 	"github.com/yofu/dxf/entity"
@@ -20,7 +21,7 @@ type Drawer struct {
 	description []DescriptionReader.Well
 }
 
-func (d *Drawer) Save(s string) {
+func (d *Drawer) SaveAs(s string) {
 	d.drawer.SaveAs(s)
 }
 
@@ -67,11 +68,11 @@ func (d *Drawer) DrawMain() {
 			d.putText(Position{pos.X + 10, pos.Y - depth*10 + 1}, strconv.FormatFloat(depth-prevDepth, 'f', 2, 64), 0)
 			d.putText(Position{pos.X + 20, pos.Y - depth*10 + 1}, strconv.FormatFloat(depth, 'f', 2, 64), 0)
 			d.putText(Position{pos.X + 30, pos.Y - depth*10 + 1},
-				strconv.FormatFloat(w.AbsoluteHeight-depth-prevDepth, 'f', 2, 64), 0)
+				strconv.FormatFloat(w.AbsoluteHeight-depth, 'f', 2, 64), 0)
 
 			d.putText(Position{pos.X + 85, pos.Y - prevDepth*10 - 5}, "", 0)
-			d.putText(Position{pos.X + 100, pos.Y - prevDepth*10 - 5}, w.Depths[depth].Identifier, 0)
-			d.putText(Position{pos.X + 110, pos.Y - prevDepth*10 - 5}, w.Depths[depth].Name, 0)
+			d.putText(Position{pos.X + 100, pos.Y - prevDepth*10 - 2.5}, w.Depths[depth].Identifier, 0)
+			d.putText(Position{pos.X + 110, pos.Y - prevDepth*10 - 2.5}, w.Depths[depth].Name, 0)
 
 			prevDepth = depth
 		}
@@ -84,19 +85,20 @@ func (d *Drawer) DrawMain() {
 				})
 			}
 		}
-		t := d.position.X
-		d.DrawTop(10)
-		d.position.X = t + 200
+		d.DrawTop(prevDepth, d.position.X)
+		prevDepth = 0
+		d.position.X += +200
 		pos.X += 200
 	}
 	d.drawer.Save()
 }
 
 // TODO:refactor this
-func (d *Drawer) DrawTop(pd float64) {
+func (d *Drawer) DrawTop(previousDepth, alignment float64) {
 	endPos := d.position
 	endPos.X += 175
 	startTemp := d.position
+	fmt.Println("position in drawer", d.position)
 	top := map[float64]string{
 		0: "Геоиндекс",
 		1: "Мощность, м",
@@ -111,10 +113,10 @@ func (d *Drawer) DrawTop(pd float64) {
 	d.drawLine(d.position, endPos)
 	endPos.Y = -50
 	d.drawLine(Position{X: d.position.X, Y: endPos.Y}, endPos)
-	endPos.Y = -50 - pd*10
+	endPos.Y = -50 - previousDepth*10
 	d.drawLine(Position{X: d.position.X, Y: endPos.Y}, endPos)
 	var i float64 = 0
-	for x := d.position.X; x <= 40; x += 10 {
+	for x := d.position.X; x <= alignment+40; x += 10 {
 		d.position.X = x
 		endPos.X = x
 		d.putText(Position{X: d.position.X + 5, Y: d.position.Y - 45}, top[i], 90)
@@ -125,7 +127,11 @@ func (d *Drawer) DrawTop(pd float64) {
 	for _, x := range r {
 		d.position.X += x
 		endPos.X = d.position.X
-		d.putText(Position{X: d.position.X + 5, Y: d.position.Y - 45}, top[i], 90)
+		if i == 8 {
+			d.putText(Position{X: d.position.X + 5, Y: d.position.Y - 45}, top[i], 0)
+		} else {
+			d.putText(Position{X: d.position.X + 5, Y: d.position.Y - 45}, top[i], 90)
+		}
 		i++
 		d.drawLine(d.position, endPos)
 	}

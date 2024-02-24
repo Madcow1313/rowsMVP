@@ -13,6 +13,7 @@ import (
 	"rowsMVP/DescriptionReader"
 	"rowsMVP/Drawer"
 	"strings"
+	"time"
 )
 
 type Data struct {
@@ -88,7 +89,7 @@ func InitMainWindow(a *astilectron.Astilectron) {
 		WebPreferences: &astilectron.WebPreferences{EnableRemoteModule: astikit.BoolPtr(true)},
 	})
 	w.Create()
-	//w.OpenDevTools()
+	w.OpenDevTools()
 	w.OnMessage(func(m *astilectron.EventMessage) interface{} {
 		var s string
 		var found bool
@@ -126,13 +127,24 @@ func InitMainWindow(a *astilectron.Astilectron) {
 			nw.Show()
 			return nil
 		} else if s, found = strings.CutPrefix(s, "File"); found {
+			w.SendMessage("progress", func(m *astilectron.EventMessage) {
+			})
 			wells := DescriptionReader.ReadFile(s)
 			var drawer Drawer.Drawer
 			drawer.InitDrawer()
 			drawer.SetWells(wells)
+			time.Sleep(time.Second)
 			drawer.DrawMain()
 			filePath, _ := strings.CutSuffix(s, ".xlsx")
-			drawer.Save(filePath + ".dxf")
+			drawer.SaveAs(filePath + ".dxf")
+
+			time.Sleep(time.Second)
+			w.SendMessage("value", func(m *astilectron.EventMessage) {
+			})
+			w.SendMessage("value", func(m *astilectron.EventMessage) {
+			})
+			w.SendMessage("done", func(m *astilectron.EventMessage) {
+			})
 		}
 		return nil
 	})
